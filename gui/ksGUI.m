@@ -507,14 +507,7 @@ classdef ksGUI < handle
                 obj.log('Data file does not exist.');
                 return;
             end
-            
-            
-            % check file extension
-            [~,~,ext] = fileparts(obj.H.settings.ChooseFileEdt.String);
-            if ~strcmp(ext, '.bin') &&  ~strcmp(ext, '.dat')
-                obj.log('Warning: Data file must be raw binary. Other formats not supported.');
-            end
-            
+                                    
             % if data file exists and output/temp are empty, pre-fill
             if strcmp(obj.H.settings.ChooseTempdirEdt.String, '...')||...
                 isempty(obj.H.settings.ChooseTempdirEdt.String)
@@ -526,6 +519,22 @@ classdef ksGUI < handle
                 pathname = fileparts(obj.H.settings.ChooseFileEdt.String);
                 obj.H.settings.ChooseOutputEdt.String = pathname;
             end
+            
+            % check file extension
+            [~,~,ext] = fileparts(obj.H.settings.ChooseFileEdt.String);
+            
+            % if plexon file convert and store to a temporary folder
+            if strcmp(ext, '.plx') || strcmp(ext, '.pl2')
+                if strcmp(ext, '.plx')
+                    obj.log('WARNING!!! reading plx file may take very long time, use pl2 file instead!');
+                end
+                obj.log('Plexon file selected, try converting...');
+                obj.H.settings.ChooseFileEdt.String = convertPlexonToRawBinary(obj.H.settings.ChooseFileEdt.String, obj);
+                
+            elseif ~strcmp(ext, '.bin') &&  ~strcmp(ext, '.dat')
+                obj.log('Warning: Data file must be raw binary. Other formats not supported.');
+            end
+            
             
             nChan = obj.checkNChan();                    
                 
