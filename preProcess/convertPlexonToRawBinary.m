@@ -93,16 +93,16 @@ end
 fclose(fid);
 
 log(obj, 'Conversion completed');
-log(obj, sprintf('Slected file %s', output_file));
+log(obj, sprintf('Output file %s', output_file));
 
 end
 
 function log(obj, message)
 
-if ismethod(obj, 'log')
+if isobject(obj) && ismethod(obj, 'log')
     obj.log(message)
 else
-    fprintf([message '\n']);
+    fprintf('%s\n', message);
 end
 
 end
