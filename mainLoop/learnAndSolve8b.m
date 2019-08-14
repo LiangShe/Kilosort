@@ -202,8 +202,8 @@ for ibatch = 1:niter
 
             W(:,Nfilt + [1:size(dWU0,3)],:) = W0(:,ones(1,size(dWU0,3)),:);
 
-            nsp(Nfilt + [1:size(dWU0,3)]) = ops.minFR * NT/ops.fs;
-            mu(Nfilt + [1:size(dWU0,3)])  = 10;            
+            nsp(Nfilt + [1:size(dWU0,3)],1) = ops.minFR * NT/ops.fs;
+            mu(Nfilt + [1:size(dWU0,3)],1)  = 10;            
 
             Nfilt = min(ops.Nfilt, size(W,2));
             Params(2) = Nfilt;
