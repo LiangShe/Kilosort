@@ -41,7 +41,7 @@ end
 % get the number of total sample
 [~, adchan_samplecounts] = plx_adchan_samplecounts(file);
 
-% find channle group with samples > 0
+% find channel group with samples > 0
 chan_found = false;
 for i=1:n_chan_groups
     nsamples = adchan_samplecounts(chan_index_groups{i}(1));
@@ -53,7 +53,7 @@ for i=1:n_chan_groups
 end
 
 if ~chan_found
-    error('Cannot find continous channel data, please check plexon file')
+    error('Cannot find continuous channel data, please check plexon file')
 end
 
 %% get sampling frequency
@@ -68,6 +68,8 @@ end
 nch = length(chan_index);
 BLOCK_SIZE = 1024^3/(nch*2); % 1G block
 n_block = ceil(nsamples/BLOCK_SIZE);
+
+log(obj, 'Converting 0%...');
 
 fid = fopen(output_file, 'w');
 data_block = zeros(nch, BLOCK_SIZE, 'int16');
