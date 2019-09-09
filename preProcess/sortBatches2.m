@@ -1,10 +1,10 @@
 function [ccb1, isort] = sortBatches2(ccb0)
 
-ccb0 = gpuArray(ccb0);
+ccb0 = gather(ccb0);
 
 % nBatches = size(ccb0,1);
 
-[u, s, v] = svdecon(ccb0);
+u = svdecon(ccb0);
 
 xs = .01 * u(:,1)/std(u(:,1));
 

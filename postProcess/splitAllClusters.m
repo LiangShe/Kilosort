@@ -49,21 +49,21 @@ while ik<Nfilt
 %     end
     
     clp0 = rez.cProjPC(isp, :, :);
-    clp0 = gpuArray(clp0(:,:));    
+    clp0 = clp0(:,:);
     clp = clp0 - mean(clp0,1);
     
     
     clp = clp - my_conv2(clp, 250, 1);
     
     if flag
-        [u s v] = svdecon(clp');    
+        u = svdecon(clp');    
         w = u(:,1);
     else
         w = mean(clp0, 1)'; 
         w = w/sum(w.^2)^.5;
     end
     
-    x = gather(clp * w);    
+    x = clp * w;    
     s1 = var(x(x>mean(x)));
     s2 = var(x(x<mean(x)));
     

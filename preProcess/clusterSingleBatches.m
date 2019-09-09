@@ -108,8 +108,8 @@ ns = reshape(ns, Nfilt, []);
 Params  = [1 NrankPC Nfilt 0 size(W,1) 0 NchanNear Nchan];
 Params(1) = size(Ws,3) * size(Ws,4);
 
-ccb = gpuArray.zeros(nBatches, 'single');
-d1 = gpuArray.zeros(nBatches, 'single');
+ccb = zeros(nBatches, 'single');
+d1 = zeros(nBatches, 'single');
 
 % [ncoefs, Nfilt, nBatches] = size(Ws);
 for ibatch = 1:nBatches 
@@ -138,7 +138,7 @@ for ibatch = 1:nBatches
     imin(ix) = t;
     %----------------------------------%
     
-    ccb(ibatch,:) = cct;
+    ccb(ibatch,:) = gather(cct);
     d1(ibatch,:) = imin;
     
     if rem(ibatch, 500)==1
@@ -149,7 +149,7 @@ end
 ccb0 = zscore(ccb, 1, 1);
 ccb0 = ccb0 + ccb0';
 
-rez.ccb = gather(ccb0);
+rez.ccb = ccb0;
 
 % sort by new manifold algorithm
 [ccb1, iorig] = sortBatches2(ccb0);
