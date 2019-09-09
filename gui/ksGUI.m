@@ -819,6 +819,7 @@ classdef ksGUI < handle
                 obj.updateDataView();
             catch ex
                 obj.log(sprintf('Error running kilosort! %s', ex.message));
+                msgText = getReport(ex)
             end   
                         
         end
