@@ -83,8 +83,8 @@ for i = 1:n_block
         data_block = zeros(nch, nsample, 'int16');
     end
     
-    for ich = chan_index 
-        [~, ~, ad] = plx_ad_span(file, ich-1, startCount, endCount);
+    for ich = 1:nch
+        [~, ~, ad] = plx_ad_span(file, chan_index(ich)-1, startCount, endCount);
         data_block(ich,:) = int16(ad);
     end
     
