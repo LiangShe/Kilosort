@@ -522,12 +522,14 @@ classdef ksGUI < handle
             if strcmp(obj.H.settings.ChooseTempdirEdt.String, '...')||...
                 isempty(obj.H.settings.ChooseTempdirEdt.String)
                 pathname = fileparts(obj.H.settings.ChooseFileEdt.String);
-                obj.H.settings.ChooseTempdirEdt.String = pathname;
+                path_ks = fullfile(pathname,'kilosort'); mkdir(path_ks);
+                obj.H.settings.ChooseTempdirEdt.String = path_ks;
             end
             if strcmp(obj.H.settings.ChooseOutputEdt.String, '...')||...
                 isempty(obj.H.settings.ChooseOutputEdt.String)
                 pathname = fileparts(obj.H.settings.ChooseFileEdt.String);
-                obj.H.settings.ChooseOutputEdt.String = pathname;
+                path_ks = fullfile(pathname,'kilosort');
+                obj.H.settings.ChooseOutputEdt.String = path_ks;
             end
             
             nChan = obj.checkNChan();                    
